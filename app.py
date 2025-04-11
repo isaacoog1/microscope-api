@@ -46,4 +46,4 @@ if __name__ == "__main__":
     magnification = float(input("Enter magnification: "))
     actual_size = index.calculate_actual_size(microscope_size, magnification)
     db.save_to_db(username, microscope_size, actual_size)
-    print(f"Actual size saved: {actual_size:.4f} mm")
+    print(f"Actual size saved: {actual_size:.4f}mm")
