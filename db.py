@@ -25,6 +25,7 @@
 import os
 import sqlite3
 from pymongo import MongoClient
+from pymongo.server_api import ServerApi
 from dotenv import load_dotenv
 
 load_dotenv()
@@ -36,9 +37,19 @@ SQLITE_DB = 'specimens.db'
 
 # MongoDB setup (only for production)
 MONGO_URI = os.getenv("MONGO_URI")
-mongo_client = MongoClient(MONGO_URI) if ENV == "production" else None
+# mongo_client = MongoClient(MONGO_URI) if ENV == "production" else None
+mongo_client = MongoClient(MONGO_URI, server_api=ServerApi('1'))
 mongo_db = mongo_client.get_default_database() if mongo_client is not None else None
+# print("mongo_db", mongo_db)
 mongo_collection = mongo_db["measurements"] if mongo_db is not None else None
+
+print(MONGO_URI)
+
+try:
+    mongo_client.admin.command('ping')
+    print("Pinged your deployment. You successfully connected to MongoDB!")
+except Exception as e:
+    print(e)
 
 
 def init_db():
