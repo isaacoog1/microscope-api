@@ -37,8 +37,8 @@ SQLITE_DB = 'specimens.db'
 # MongoDB setup (only for production)
 MONGO_URI = os.getenv("MONGO_URI")
 mongo_client = MongoClient(MONGO_URI) if ENV == "production" else None
-mongo_db = mongo_client.get_default_database() if mongo_client else None
-mongo_collection = mongo_db["measurements"] if mongo_db else None
+mongo_db = mongo_client.get_default_database() if mongo_client is not None else None
+mongo_collection = mongo_db["measurements"] if mongo_db is not None else None
 
 
 def init_db():
